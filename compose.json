@@ -1,0 +1,187 @@
+{
+    "attributes": [
+        {
+            "trait_type": "Background", 
+            "choices": [
+                {
+                    "path": "traits/Background/Magenta.png", 
+                    "weight": 12, 
+                    "value": "Magenta"
+                }, 
+                {
+                    "path": "traits/Background/Raspberry Red.png", 
+                    "weight": 12, 
+                    "value": "Raspberry Red"
+                }, 
+                {
+                    "path": "traits/Background/Silk Blue.png", 
+                    "weight": 12, 
+                    "value": "Silk Blue"
+                }, 
+                {
+                    "path": "traits/Background/Decentrawave Black.png", 
+                    "weight": 5, 
+                    "value": "Decentrawave Black"
+                }, 
+                {
+                    "path": "traits/Background/Vaporwave.png", 
+                    "weight": 3, 
+                    "value": "Vaporwave"
+                }
+            ]
+        }, 
+        {
+            "trait_type": "Shell", 
+            "choices": [
+                {
+                    "path": "traits/Shell/Gamer.png", 
+                    "weight": 5, 
+                    "value": "Gamer"
+                }, 
+                {
+                    "path": "traits/Shell/Microphone.png", 
+                    "weight": 5, 
+                    "value": "Microphone"
+                }, 
+                {
+                    "path": "traits/Shell/Fish Tank.png", 
+                    "weight": 3, 
+                    "value": "Fish Tank"
+                }, 
+                {
+                    "path": "traits/Shell/Braindead.png", 
+                    "weight": 1, 
+                    "value": "Braindead", 
+                    "max": 100
+                }, 
+                {
+                    "path": "traits/Shell/Treasured Jewel.png", 
+                    "weight": 1, 
+                    "value": "Treasured Jewel", 
+                    "max": 100
+                }
+            ]
+        }, 
+        {
+            "trait_type": "Body", 
+            "choices": [
+                {
+                    "path": "traits/Body/Black Hoodie.png", 
+                    "weight": 12, 
+                    "value": "Black Hoodie"
+                }, 
+                {
+                    "path": "traits/Body/Polkdot Tee.png", 
+                    "weight": 12, 
+                    "value": "Polkdot Tee"
+                }, 
+                {
+                    "path": "traits/Body/Referee Turtleneck.png", 
+                    "weight": 12, 
+                    "value": "Referee Turtleneck"
+                }, 
+                {
+                    "path": "traits/Body/Stripe Tee.png", 
+                    "weight": 12, 
+                    "value": "Stripe Tee"
+                }, 
+                {
+                    "path": "traits/Body/Farmer.png", 
+                    "weight": 9, 
+                    "value": "Farmer"
+                }
+            ]
+        }, 
+        {
+            "trait_type": "Frame", 
+            "choices": [
+                {
+                    "path": "traits/Frame/Bubble Gum Pink.png", 
+                    "weight": 12, 
+                    "value": "Bubble Gum Pink"
+                }, 
+                {
+                    "path": "traits/Frame/Charcoal Black.png", 
+                    "weight": 12, 
+                    "value": "Charcoal Black"
+                }, 
+                {
+                    "path": "traits/Frame/Turquoise.png", 
+                    "weight": 12, 
+                    "value": "Turquoise"
+                }, 
+                {
+                    "path": "traits/Frame/Crystalline.png", 
+                    "weight": 3, 
+                    "value": "Crystalline"
+                }, 
+                {
+                    "path": "traits/Frame/Pyschedelic.png", 
+                    "weight": 3, 
+                    "value": "Pyschedelic"
+                }
+            ]
+        }, 
+        {
+            "trait_type": "Channel", 
+            "choices": [
+                {
+                    "path": "traits/Channel/Afterdark.png", 
+                    "weight": 9, 
+                    "value": "Afterdark"
+                }, 
+                {
+                    "path": "traits/Channel/Travelling Nomad.png", 
+                    "weight": 9, 
+                    "value": "Travelling Nomad"
+                }, 
+                {
+                    "path": "traits/Channel/InuInu.png", 
+                    "weight": 5, 
+                    "value": "InuInu"
+                }, 
+                {
+                    "path": "traits/Channel/Smoke Break.png", 
+                    "weight": 5, 
+                    "value": "Smoke Break"
+                }, 
+                {
+                    "path": "traits/Channel/Checkered.png", 
+                    "weight": 3, 
+                    "value": "Checkered"
+                }
+            ]
+        }, 
+        {
+            "trait_type": "Headgear", 
+            "choices": [
+                {
+                    "path": "traits/Headgear/Flower Crown.png", 
+                    "weight": 12, 
+                    "value": "Flower Crown"
+                }, 
+                {
+                    "path": "traits/Headgear/Bunny Ears.png", 
+                    "weight": 9, 
+                    "value": "Bunny Ears"
+                }, 
+                {
+                    "path": "traits/Headgear/Sailor Hat.png", 
+                    "weight": 9, 
+                    "value": "Sailor Hat"
+                }, 
+                {
+                    "path": "traits/Headgear/Ranch Hat.png", 
+                    "weight": 3, 
+                    "value": "Ranch Hat"
+                }, 
+                {
+                    "path": "traits/Headgear/Uniformboy Mask.png", 
+                    "weight": 3, 
+                    "value": "Uniformboy Mask"
+                }
+            ]
+        }
+    ], 
+    "total": 32
+}

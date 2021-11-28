@@ -1,0 +1,6 @@
+.env
+sftp-config.json
+.DS_Store
+images/
+metadata/
+upload_code.sh
