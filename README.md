@@ -1,6 +1,6 @@
 # Chainrand NFT demo 
 
-This project demonstrates how to use Chainrand to generate a NFT collection.
+This project demonstrates how to use Chainrand to generate a NFT collection off-chain in a verifibly fair manner.
 
 A sample basic smart contract is provided.
 
@@ -8,9 +8,9 @@ The files are simplified for ease of reading.
 
 # Requirements
 
-- Node v16.9.0 (This is the version used for this project)
+- Node v16.9.0 (This is the version used for this project, you may use lower versions if supported)
 
-- An account at [https://web3.storage](https://web3.storage), with an API key.
+- An account at [https://web3.storage](https://web3.storage), with an API key. Don't worry, it's free.
 
 # Deployment
 
