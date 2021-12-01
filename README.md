@@ -22,7 +22,7 @@ The files are simplified for ease of reading.
    npm install
    ```
 
-5. Zip and upload the code to IPFS.
+5. Zip and upload the code to IPFS. This uses web3 storage.
    ```
    node upload_code.js
    ```
@@ -47,19 +47,23 @@ The files are simplified for ease of reading.
    ```
 
 8. Generate the NFT images and metadata.
+
+   Essentially, the code concatentates the randomness (in base 10) with the seed key, and uses it to initialize Chainrand's deteministic RNG class.
    ```
    node generate.js
    ```
 
-9. Upload the NFT images and metadata to IPFS.
+9. Upload the NFT images and metadata to IPFS. This uses web3 storage.
    ```
    node upload.js 
    ```
    
-10. Reveal the NFTs. 
+10. Once minting is over, reveal the NFTs. Then, reveal the seed key in Chainrand.
 
     Update the smart contract with the `metadataDirCID` generated in the previous step,  
     and the `provenance` which is the OpenSea URI of the Chainrand NFT.
+	
+	Go to [https://chainrand.io/#/tokens](https://chainrand.io/#/tokens) and update the seed key for the project's token.
 	
 ## `.env` file example
 
