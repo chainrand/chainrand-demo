@@ -32,7 +32,7 @@ The files are simplified for ease of reading.
    ```
    The script automatically ignores generated content and private files like `.env`.  
 
-   You can also do it manually, but do make sure to remove and private files.
+   You can also do it manually, but do make sure to remove any private files.
 
 5. Mint a Chainrand NFT at [https://chainrand.io/#/mint](https://chainrand.io/#/mint).
 
