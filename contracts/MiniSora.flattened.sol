@@ -1260,6 +1260,71 @@ abstract contract Ownable is Context {
     }
 }
 
+
+// File: @openzeppelin/contracts@4.3.2/security/ReentrancyGuard.sol
+
+
+pragma solidity ^0.8.0;
+
+/**
+ * @dev Contract module that helps prevent reentrant calls to a function.
+ *
+ * Inheriting from `ReentrancyGuard` will make the {nonReentrant} modifier
+ * available, which can be applied to functions to make sure there are no nested
+ * (reentrant) calls to them.
+ *
+ * Note that because there is a single `nonReentrant` guard, functions marked as
+ * `nonReentrant` may not call one another. This can be worked around by making
+ * those functions `private`, and then adding `external` `nonReentrant` entry
+ * points to them.
+ *
+ * TIP: If you would like to learn more about reentrancy and alternative ways
+ * to protect against it, check out our blog post
+ * https://blog.openzeppelin.com/reentrancy-after-istanbul/[Reentrancy After Istanbul].
+ */
+abstract contract ReentrancyGuard {
+    // Booleans are more expensive than uint256 or any type that takes up a full
+    // word because each write operation emits an extra SLOAD to first read the
+    // slot's contents, replace the bits taken up by the boolean, and then write
+    // back. This is the compiler's defense against contract upgrades and
+    // pointer aliasing, and it cannot be disabled.
+
+    // The values being non-zero value makes deployment a bit more expensive,
+    // but in exchange the refund on every call to nonReentrant will be lower in
+    // amount. Since refunds are capped to a percentage of the total
+    // transaction's gas, it is best to keep them low in cases like this one, to
+    // increase the likelihood of the full refund coming into effect.
+    uint256 private constant _NOT_ENTERED = 1;
+    uint256 private constant _ENTERED = 2;
+
+    uint256 private _status;
+
+    constructor() {
+        _status = _NOT_ENTERED;
+    }
+
+    /**
+     * @dev Prevents a contract from calling itself, directly or indirectly.
+     * Calling a `nonReentrant` function from another `nonReentrant`
+     * function is not supported. It is possible to prevent this from happening
+     * by making the `nonReentrant` function external, and make it call a
+     * `private` function that does the actual work.
+     */
+    modifier nonReentrant() {
+        // On the first call to nonReentrant, _notEntered will be true
+        require(_status != _ENTERED, "ReentrancyGuard: reentrant call");
+
+        // Any calls to nonReentrant after this point will fail
+        _status = _ENTERED;
+
+        _;
+
+        // By storing the original value once again, a refund is triggered (see
+        // https://eips.ethereum.org/EIPS/eip-2200)
+        _status = _NOT_ENTERED;
+    }
+}
+
 // File: MiniSora.sol
 
 pragma solidity ^0.8.0;
@@ -1267,8 +1332,9 @@ pragma abicoder v2;
 
 // import "@openzeppelin/contracts@4.3.2/token/ERC721/extensions/ERC721Enumerable.sol";
 // import "@openzeppelin/contracts@4.3.2/access/Ownable.sol";
+// import "@openzeppelin/contracts@4.3.2/security/ReentrancyGuard.sol";
 
-contract MiniSora is ERC721Enumerable, Ownable {
+contract MiniSora is ERC721Enumerable, Ownable, ReentrancyGuard {
     
     using Strings for uint;
 
@@ -1290,33 +1356,30 @@ contract MiniSora is ERC721Enumerable, Ownable {
 
     event Revealed(string, string);
 
-    constructor() ERC721("Mini Sora", "MSora")  {}
+    constructor() ERC721("Mini Sora", "MSora") { 
+        saleState = 255; 
+    }
 
     /// @dev Mint tokens.
-    function mint(uint _numTokens) public payable {
+    function mint(uint _numTokens) public payable nonReentrant {
         require(MINT_FEE * _numTokens <= msg.value, "Insufficient payment.");
-        require(totalSupply() + _numTokens <= MAX_TOKENS, "No more tokens available.");
         require(_numTokens <= MAX_TOKENS_PER_MINT, "Tokens per mint exceeded");
         require(_numTokens > 0, "Minimum number to mint is 1.");
-        require(saleState > 0, "Sale is not opened.");
+        require(saleState == 1, "Sale is not opened.");
 
         for (uint i = 0; i < _numTokens; i++) {
             uint tokenId = totalSupply();
-            if (tokenId < MAX_TOKENS) {
-                _safeMint(msg.sender, tokenId);
-            }
+            require(tokenId < MAX_TOKENS, "No more tokens available.");
+            _safeMint(msg.sender, tokenId);
         }
     }
     
     /// @dev Mint tokens for the creator.
     function selfMint(uint _numTokens) public onlyOwner {
-        require(totalSupply() + _numTokens <= MAX_TOKENS, "No more tokens available.");
-
         for (uint i = 0; i < _numTokens; i++) {
             uint tokenId = totalSupply();
-            if (tokenId < MAX_TOKENS) {
-                _safeMint(msg.sender, tokenId);
-            }
+            require(tokenId < MAX_TOKENS, "No more tokens available.");
+            _safeMint(msg.sender, tokenId);
         }
     }
 
@@ -1329,6 +1392,9 @@ contract MiniSora is ERC721Enumerable, Ownable {
     /// @dev Returns the token URI.
     function tokenURI(uint _tokenId) override public view returns (string memory) {
         require(_tokenId < totalSupply(), "Token not found.");
+        if (bytes(metadataDirCID).length == 0) {
+            return "";
+        }
         return string(abi.encodePacked("https://", metadataDirCID, 
             ".ipfs.dweb.link/metadata/", _tokenId.toString(), ".json"));
     }
@@ -1347,6 +1413,6 @@ contract MiniSora is ERC721Enumerable, Ownable {
 
     /// @dev Closes the sale.
     function closeSale() public onlyOwner {
-        saleState = 0;
+        saleState = 255;
     }
 }

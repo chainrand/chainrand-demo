@@ -4,8 +4,9 @@ pragma abicoder v2;
 
 import "@openzeppelin/contracts@4.3.2/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts@4.3.2/access/Ownable.sol";
+import "@openzeppelin/contracts@4.3.2/security/ReentrancyGuard.sol";
 
-contract MiniSora is ERC721Enumerable, Ownable {
+contract MiniSora is ERC721Enumerable, Ownable, ReentrancyGuard {
     
     using Strings for uint;
 
@@ -27,33 +28,30 @@ contract MiniSora is ERC721Enumerable, Ownable {
 
     event Revealed(string, string);
 
-    constructor() ERC721("Mini Sora", "MSora")  {}
+    constructor() ERC721("Mini Sora", "MSora") { 
+        saleState = 255; 
+    }
 
     /// @dev Mint tokens.
-    function mint(uint _numTokens) public payable {
+    function mint(uint _numTokens) public payable nonReentrant {
         require(MINT_FEE * _numTokens <= msg.value, "Insufficient payment.");
-        require(totalSupply() + _numTokens <= MAX_TOKENS, "No more tokens available.");
         require(_numTokens <= MAX_TOKENS_PER_MINT, "Tokens per mint exceeded");
         require(_numTokens > 0, "Minimum number to mint is 1.");
-        require(saleState > 0, "Sale is not opened.");
+        require(saleState == 1, "Sale is not opened.");
 
         for (uint i = 0; i < _numTokens; i++) {
             uint tokenId = totalSupply();
-            if (tokenId < MAX_TOKENS) {
-                _safeMint(msg.sender, tokenId);
-            }
+            require(tokenId < MAX_TOKENS, "No more tokens available.");
+            _safeMint(msg.sender, tokenId);
         }
     }
     
     /// @dev Mint tokens for the creator.
     function selfMint(uint _numTokens) public onlyOwner {
-        require(totalSupply() + _numTokens <= MAX_TOKENS, "No more tokens available.");
-
         for (uint i = 0; i < _numTokens; i++) {
             uint tokenId = totalSupply();
-            if (tokenId < MAX_TOKENS) {
-                _safeMint(msg.sender, tokenId);
-            }
+            require(tokenId < MAX_TOKENS, "No more tokens available.");
+            _safeMint(msg.sender, tokenId);
         }
     }
 
@@ -66,6 +64,9 @@ contract MiniSora is ERC721Enumerable, Ownable {
     /// @dev Returns the token URI.
     function tokenURI(uint _tokenId) override public view returns (string memory) {
         require(_tokenId < totalSupply(), "Token not found.");
+        if (bytes(metadataDirCID).length == 0) {
+            return "";
+        }
         return string(abi.encodePacked("https://", metadataDirCID, 
             ".ipfs.dweb.link/metadata/", _tokenId.toString(), ".json"));
     }
@@ -84,6 +85,6 @@ contract MiniSora is ERC721Enumerable, Ownable {
 
     /// @dev Closes the sale.
     function closeSale() public onlyOwner {
-        saleState = 0;
+        saleState = 255;
     }
 }
