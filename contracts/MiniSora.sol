@@ -18,11 +18,11 @@ contract MiniSora is ERC721Enumerable, Ownable, ReentrancyGuard {
     // exact attributes of this generative collection for verification.
     string public PROVENANCE; 
 
-    uint public const MAX_TOKENS = 32;
+    uint public constant MAX_TOKENS = 32;
 
-    uint public const MAX_TOKENS_PER_MINT = 10;
+    uint public constant MAX_TOKENS_PER_MINT = 10;
 
-    uint public const MINT_FEE = 10000000000000000; // 0.01 ETH
+    uint public constant MINT_FEE = 10000000000000000; // 0.01 ETH
 
     /// @dev 1: opened, 255: closed. 
     uint saleState;
